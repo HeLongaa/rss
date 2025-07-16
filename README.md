@@ -29,10 +29,10 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/rss-subscription-service.git
+git clone https://github.com/HeLongaa/rss.git
 
 # 进入项目目录
-cd rss-subscription-service
+cd rss
 
 # 安装依赖
 npm install
