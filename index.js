@@ -9,6 +9,24 @@ const path = require('path');
 const https = require('https');
 const cors = require('cors');
 
+// 添加 HTML 处理函数
+function cleanHtml(html) {
+    if (!html) return '';
+    // 解码 Unicode
+    const decoded = html.replace(/\\u[\dA-F]{4}/gi, match =>
+        String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16))
+    );
+    // 移除 HTML 标签
+    return decoded.replace(/<[^>]*>/g, '')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&quot;/g, '"')
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
 const app = express();
 const parser = new RSSParser();
 
@@ -177,7 +195,7 @@ app.get('/login', (req, res) => {
                     <i class="fas fa-rss text-5xl text-blue-500 mb-4"></i>
                     <h1 class="text-3xl font-bold text-gray-800">RSS Service</h1>
                 </div>
-                
+
                 <div class="space-y-4">
                     <p class="text-gray-600 text-center">Please try again</p>
                     <a href="/" class="block w-full bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition duration-300 ease-in-out transform hover:scale-105">
@@ -312,7 +330,7 @@ async function updateRSSData() {
                     author: item.creator || item.author || feed.title || 'Unknown',
                     date: item.isoDate || item.pubDate || new Date().toISOString(),
                     link: item.link,
-                    content: item['content:encoded'] || item.content || item.description || item.summary || item.contentSnippet || ''
+                    content: cleanHtml(item['content:encoded'] || item.content || item.description || item.summary || item.contentSnippet || '')
                 }));
                 allItems.push(...items);
                 console.log(`Successfully fetched ${items.length} items from ${feedUrl}`);
