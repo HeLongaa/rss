@@ -312,7 +312,7 @@ async function updateRSSData() {
                     author: item.creator || item.author || feed.title || 'Unknown',
                     date: item.isoDate || item.pubDate || new Date().toISOString(),
                     link: item.link,
-                    content: item.contentSnippet || item.content || ''
+                    content: item['content:encoded'] || item.content || item.description || item.summary || item.contentSnippet || ''
                 }));
                 allItems.push(...items);
                 console.log(`Successfully fetched ${items.length} items from ${feedUrl}`);
