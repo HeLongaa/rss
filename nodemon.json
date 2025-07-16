@@ -1,0 +1,11 @@
+{
+    "ignore": [
+        "rss_feeds.json",
+        "rss.json",
+        "*.log"
+    ],
+    "watch": [
+        "index.js",
+        "public/*"
+    ]
+}
