@@ -7,6 +7,7 @@ const RSSParser = require('rss-parser');
 const fs = require('fs').promises;
 const path = require('path');
 const https = require('https');
+const cors = require('cors');
 
 const app = express();
 const parser = new RSSParser();
@@ -22,6 +23,10 @@ console.log('Environment Check:', {
 });
 
 // Middleware
+app.use(cors({
+    origin: 'http://localhost:4321', // 允许来自 Astro 开发服务器的请求
+    credentials: true // 允许跨域请求携带凭证
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
