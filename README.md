@@ -9,6 +9,8 @@
 
 一个现代化的RSS订阅服务，支持GitHub认证和实时RSS更新。
 
+是[RSS-Subscription](https://github.com/HeLongaa/RSS-Subscription) 的nodejs版本
+
 ## ✨ 特性
 
 - 🔐 GitHub OAuth认证
